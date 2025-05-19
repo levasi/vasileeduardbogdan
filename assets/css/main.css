@@ -1,0 +1,136 @@
+@import 'tailwindcss';
+
+@theme {
+    --font-poppins: "Poppins", sans-serif;
+    --font-bubble: "Bubblegum Sans", sans-serif;
+    --color-romance: #78dcca;
+    --color-elephant: #0D2F3F;
+    --color-tulip: #EDB33C;
+}
+
+html {
+    font-size: 16px;
+    /* Base font size */
+}
+
+
+.my-cv-btn {
+    background-color: var(--color-romance);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-family: var(--font-poppins);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.socials {
+    .social-icon {
+        display: block;
+
+        img {
+            width: 50px;
+        }
+    }
+}
+
+.speech-line-image {}
+
+.col-right {
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.experience-wrapper {
+    display: flex;
+    margin-bottom: 10vh;
+    align-items: center;
+}
+
+.experience {
+    display: block;
+}
+
+.col-center {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 auto;
+    max-width: 75%;
+
+    .image-wrapper {
+        position: relative;
+    }
+}
+
+.col-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 70%;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #F8F7F1;
+    border-bottom: 1px solid #fefbec;
+}
+
+body {
+    margin: 0;
+}
+
+.navigation {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+
+    li {
+        padding: 9px;
+
+        a {
+            text-decoration: none;
+            color: #6c6d6d;
+        }
+    }
+}
+
+.page {
+    background-color: #F8F7F1;
+    min-height: 100vh;
+    margin: 0 auto;
+}
+
+.nuxt-link {
+    color: #6c6d6d
+}
+
+.speech-line-image {
+    left: -75%;
+}
+
+.col-left-hi {
+    display: flex;
+    flex-direction: column;
+    font-size: 2rem;
+}
+
+@media screen and (max-width: 768px) {
+    html {
+        font-size: 14px;
+        /* Adjust base font size */
+    }
+}
