@@ -20,7 +20,7 @@
                 <span></span>
             </div>
         </header>
-        <div class="page">
+        <div class="page pb-20">
             <slot />
         </div>
     </div>

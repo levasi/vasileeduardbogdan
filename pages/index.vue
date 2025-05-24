@@ -1,5 +1,6 @@
 <template>
-    <div class="page font-poppins ">
+    <div class="font-poppins ">
+        <!-- <Starter></Starter> -->
         <div class="container">
             <div class="content flex h-screen items-center">
                 <div class="col col-left flex-1 flex flex-col content-between">
