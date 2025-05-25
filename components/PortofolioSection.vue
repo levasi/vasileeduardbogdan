@@ -6,6 +6,11 @@
         </div>
 
         <div class="portofolio-section__content gap-5">
+              <NuxtLink to="/earth"
+                class="portofolio-section__item cursor-pointer flex-col p-4 bg-white shadow-md rounded-lg flex items-center justify-center">
+                <h3>Earth</h3>
+                <p>Earth simulation.</p>
+            </NuxtLink>
             <NuxtLink to="/cube"
                 class="portofolio-section__item cursor-pointer flex-col p-4 bg-white shadow-md rounded-lg flex items-center justify-center">
                 <h3>Cube</h3>
@@ -33,7 +38,10 @@
 }
 
 .portofolio-section__content {
-    display: flex;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  grid-template-rows: masonry;
 
     .portofolio-section__item {
         height: 150px;

@@ -40,8 +40,6 @@ html {
     }
 }
 
-.speech-line-image {}
-
 .col-right {
     height: 70%;
     display: flex;
@@ -84,8 +82,6 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #F8F7F1;
-    border-bottom: 1px solid #fefbec;
 }
 
 body {
