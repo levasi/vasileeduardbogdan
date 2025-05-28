@@ -5,8 +5,8 @@
 import * as THREE from 'three';
 import { onMounted, ref } from 'vue';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import earthMapTexture from '~/assets/images/earth/00_earthmap1k.jpg';
 
+import earthMapTexture from '~/assets/images/earth/00_earthmap1k.jpg';
 import specularMap from '~/assets/images/earth/02_earthspec1k.jpg';
 import bumpMap from '~/assets/images/earth/01_earthbump1k.jpg';
 import lightsMap from '~/assets/images/earth/03_earthlights1k.jpg';

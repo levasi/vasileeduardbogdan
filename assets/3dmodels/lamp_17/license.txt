@@ -1,0 +1,8 @@
+Model Information:
+* title:	Lamp 17
+* source:	https://sketchfab.com/3d-models/lamp-17-894d5a03a40847d88f7f7cae26004e6c
+* author:	Prince Obrymec (https://sketchfab.com/prince-obrymec)
+
+Model License:
+* license type:	SKETCHFAB Standard (https://sketchfab.com/licenses)
+* requirements:	Under basic restrictions, use worldwide, on all types of media, commercially or not, and in all types of derivative works

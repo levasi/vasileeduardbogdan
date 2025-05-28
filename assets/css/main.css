@@ -13,7 +13,6 @@ html {
     /* Base font size */
 }
 
-
 .my-cv-btn {
     background-color: var(--color-romance);
     color: white;
@@ -78,7 +77,7 @@ html {
     height: 70%;
 }
 
-header {
+.header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -88,11 +87,12 @@ body {
     margin: 0;
 }
 
-.navigation {
+.top-navigation {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     list-style: none;
     padding: 0;
+    width: 100%;
 
     li {
         padding: 9px;

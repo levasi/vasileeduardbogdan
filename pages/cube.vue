@@ -1,12 +1,12 @@
 <template>
-    <div ref="cubeContainerRef" class="cube-container"></div>
+    <div ref="starterTemplate" class="starter-container"></div>
 </template>
 <script setup>
 import * as THREE from 'three'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 import { onMounted, onBeforeUnmount, ref } from 'vue'
-const cubeContainerRef = ref(null)
-
+const starterTemplate = ref(null)
 let renderer = null
 
 onMounted(() => {
@@ -14,8 +14,8 @@ onMounted(() => {
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
     renderer = new THREE.WebGLRenderer({ antialias: true })
     renderer.setSize(window.innerWidth, window.innerHeight)
-
-    cubeContainerRef.value.appendChild(renderer.domElement)
+    new OrbitControls(camera, renderer.domElement);
+    starterTemplate.value.appendChild(renderer.domElement)
 
     const geometry = new THREE.BoxGeometry()
     const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 })
@@ -31,6 +31,13 @@ onMounted(() => {
         renderer.render(scene, camera)
     }
     animate()
+
+    function handleWindowResize() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+    window.addEventListener('resize', handleWindowResize, false);
 })
 onBeforeUnmount(() => {
     renderer.dispose();

@@ -13,6 +13,7 @@ export default defineNuxtConfig({
       tailwindcss(),
       glsl(),
     ],
+    assetsInclude: ['**/*.glb'], // Add glb files to assetsInclude
   },
 
   modules: ["v-gsap-nuxt", "@tresjs/nuxt"],
