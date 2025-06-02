@@ -9,7 +9,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ["~/assets/css/main.css"],
   app: {
-    baseURL: '/vasileeduardbogdan/', // Base URL for GitHub Pages
+    baseURL: process.env.NODE_ENV === 'production' ? '/vasileeduardbogdan/' : '/', // Base URL for GitHub Pages only in production
   },
   vite: {
     build: {

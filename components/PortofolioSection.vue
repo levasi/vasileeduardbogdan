@@ -6,6 +6,10 @@
         </div>
 
         <div class="portofolio-section__content grid grid-cols-4 gap-6">
+            <NuxtLink to="/sphere-vertices"
+                class="portofolio-section__item h-40 cursor-pointer flex-col p-4 bg-white shadow-md rounded-lg flex items-center justify-center">
+                <h3>Sphere vertices</h3>
+            </NuxtLink>
             <NuxtLink to="/scroll-test"
                 class="portofolio-section__item h-40 cursor-pointer flex-col p-4 bg-white shadow-md rounded-lg flex items-center justify-center">
                 <h3>Scroll test</h3>

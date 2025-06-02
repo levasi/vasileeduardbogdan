@@ -1,54 +1,59 @@
 <template>
     <div ref="lightBallsCanvas"></div>
 </template>
+
 <script setup>
-definePageMeta({
-    layout: 'fixed-nav'
-})
-import * as THREE from 'three'
+import * as THREE from 'three';
 import RAPIER from '@dimforge/rapier3d-compat';
 import { UltraHDRLoader } from 'three/addons/loaders/UltraHDRLoader.js';
-import { OrbitControls } from 'three/addons/controls/OrbitControls'
-import { onMounted, onBeforeUnmount, ref } from 'vue'
+import { OrbitControls } from 'three/addons/controls/OrbitControls';
+import { onMounted, onBeforeUnmount, ref } from 'vue';
 
 import giuseppeHdr from '~/assets/hdr/san_giuseppe_bridge_2k.jpg';
+import { getBody, getMouseBall } from './getBodies.js';
 
-import { getBody, getMouseBall } from "./getBodies.js";
+definePageMeta({
+    layout: 'fixed-nav',
+});
 
-const lightBallsCanvas = ref(null)
-let renderer = null
+const lightBallsCanvas = ref(null);
 
-
-onMounted(async () => {
-    const w = window.innerWidth;
-    const h = window.innerHeight;
+function useThreeScene() {
     const scene = new THREE.Scene();
-    // scene.backgroundBlurriness = 0.1;
-    const camera = new THREE.PerspectiveCamera(75, w / h, 0.1, 1000);
-    camera.position.z = 5;
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(w, h);
+
+    camera.position.z = 5;
+    renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.outputColorSpace = THREE.SRGBColorSpace;
-    lightBallsCanvas.value.appendChild(renderer.domElement);
 
-    const ctrls = new OrbitControls(camera, renderer.domElement);
-    ctrls.enableDamping = true;
+    return { scene, camera, renderer };
+}
 
+function useOrbitControls(camera, renderer) {
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    return controls;
+}
+
+function useHDRLoader(scene) {
     const hdrLoader = new UltraHDRLoader();
     hdrLoader.load(giuseppeHdr, (hdr) => {
         hdr.mapping = THREE.EquirectangularReflectionMapping;
-        // scene.background = hdr;
         scene.environment = hdr;
     });
+}
 
-    await RAPIER.init();
+function usePhysicsWorld() {
     const gravity = { x: 0.0, y: 0, z: 0.0 };
     const world = new RAPIER.World(gravity);
+    return world;
+}
 
+function useBodies(scene, world) {
     const numBodies = 100;
     const bodies = [];
-
 
     for (let i = 0; i < numBodies; i++) {
         const body = getBody(RAPIER, world);
@@ -56,39 +61,10 @@ onMounted(async () => {
         scene.add(body.mesh);
     }
 
-    const mouseBall = getMouseBall(RAPIER, world);
-    scene.add(mouseBall.mesh);
+    return bodies;
+}
 
-    const hemiLight = new THREE.HemisphereLight(0x00bbff, 0xaa00ff);
-    hemiLight.intensity = 0.2;
-    scene.add(hemiLight);
-
-    // Sprites BG
-    const gradientBackground = useGetLayer({
-        hue: 0.6,
-        numSprites: 8,
-        opacity: 0.2,
-        radius: 10,
-        size: 24,
-        z: -10.5,
-    });
-    scene.add(gradientBackground);
-
-    const pointsGeo = new THREE.BufferGeometry();
-    const pointsMat = new THREE.PointsMaterial({
-        size: 0.035,
-        vertexColors: true
-    });
-    const points = new THREE.Points(pointsGeo, pointsMat);
-    scene.add(points);
-
-    function renderDebugView() {
-        const { vertices, colors } = world.debugRender();
-        pointsGeo.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
-        pointsGeo.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
-    }
-
-    // Mouse Interactivity
+function useMouseInteraction(scene, camera, world) {
     const raycaster = new THREE.Raycaster();
     const pointerPos = new THREE.Vector2(0, 0);
     const mousePos = new THREE.Vector3(0, 0, 0);
@@ -98,12 +74,14 @@ onMounted(async () => {
         wireframe: true,
         color: 0x00ff00,
         transparent: true,
-        opacity: 0.0
+        opacity: 0.0,
     });
     const mousePlane = new THREE.Mesh(mousePlaneGeo, mousePlaneMat);
     mousePlane.position.set(0, 0, 0.2);
     scene.add(mousePlane);
 
+    const mouseBall = getMouseBall(RAPIER, world);
+    scene.add(mouseBall.mesh);
 
     window.addEventListener('mousemove', (evt) => {
         pointerPos.set(
@@ -112,44 +90,67 @@ onMounted(async () => {
         );
     });
 
-    let cameraDirection = new THREE.Vector3();
+    const cameraDirection = new THREE.Vector3();
+
     function handleRaycast() {
-        // orient the mouse plane to the camera
         camera.getWorldDirection(cameraDirection);
         cameraDirection.multiplyScalar(-1);
         mousePlane.lookAt(cameraDirection);
 
         raycaster.setFromCamera(pointerPos, camera);
-        const intersects = raycaster.intersectObjects(
-            [mousePlane],
-            false
-        );
+        const intersects = raycaster.intersectObjects([mousePlane], false);
         if (intersects.length > 0) {
             mousePos.copy(intersects[0].point);
         }
     }
+
+    return { mouseBall, mousePos, handleRaycast };
+}
+
+function useLighting(scene) {
+    const hemiLight = new THREE.HemisphereLight(0x00bbff, 0xaa00ff);
+    hemiLight.intensity = 0.2;
+    scene.add(hemiLight);
+}
+
+function useWindowResize(camera, renderer) {
+    function handleWindowResize() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    window.addEventListener('resize', handleWindowResize, false);
+
+    onBeforeUnmount(() => {
+        window.removeEventListener('resize', handleWindowResize);
+    });
+}
+
+onMounted(async () => {
+    const { scene, camera, renderer } = useThreeScene();
+    lightBallsCanvas.value.appendChild(renderer.domElement);
+
+    const controls = useOrbitControls(camera, renderer);
+    useHDRLoader(scene);
+    await RAPIER.init();
+
+    const world = usePhysicsWorld();
+    const bodies = useBodies(scene, world);
+    const { mouseBall, mousePos, handleRaycast } = useMouseInteraction(scene, camera, world);
+    useLighting(scene);
+    useWindowResize(camera, renderer);
 
     function animate() {
         requestAnimationFrame(animate);
         world.step();
         handleRaycast();
         mouseBall.update(mousePos);
-        ctrls.update();
-        // renderDebugView();
-        bodies.forEach(b => b.update());
+        controls.update();
+        bodies.forEach((b) => b.update());
         renderer.render(scene, camera);
     }
 
     animate();
-
-    function handleWindowResize() {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-    }
-    window.addEventListener('resize', handleWindowResize, false);
-})
-// onBeforeUnmount(() => {
-//     renderer.dispose();
-// });
+});
 </script>
