@@ -1,5 +1,5 @@
 import * as THREE from "three";
-
+import radGrad from "@/assets/images/rad-grad.png";
 const loader = new THREE.TextureLoader();
 
 function getSprite({ hasFog, color, opacity, path, pos, size }) {
@@ -24,7 +24,7 @@ function getLayer({
     hue = 0.0,
     numSprites = 10,
     opacity = 1,
-    path = "./rad-grad.png",
+    path = radGrad,
     radius = 1,
     sat = 0.5,
     size = 1,

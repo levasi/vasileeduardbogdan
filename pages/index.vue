@@ -1,6 +1,5 @@
 <template>
     <div class="font-poppins ">
-        <!-- <Starter></Starter> -->
         <div class="container">
             <div class="content flex h-screen items-center">
                 <div class="col col-left flex-1 flex flex-col content-between">
@@ -11,7 +10,7 @@
                     <div class="text-2xl">
                         <div class="experience-wrapper">
                             <span class="font-bold text-romance text-6xl mr-2">
-                                9
+                                9+
                             </span>
                             <span class="font-medium text-base experience">
                                 Years of <br> experience
@@ -66,7 +65,9 @@ const speechLineImage = ref(null)
 onMounted(() => {
     gsap.from(meImage.value, {
         autoAlpha: 0,
-        duration: 1
+        duration: 1,
+        top: -33,
+        ease: 'power2.out',
     })
     gsap.from(speechLineImage.value, {
         autoAlpha: 0,

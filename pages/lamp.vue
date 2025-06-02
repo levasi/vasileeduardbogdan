@@ -13,8 +13,7 @@ import { UltraHDRLoader } from 'three/addons/loaders/UltraHDRLoader.js';
 // import files
 import earthMapTexture from '~/assets/images/earth/00_earthmap1k.jpg';
 import lampGltf from '~/assets/glb/duck.glb'; // Adjust the path to your GLTF model
-// import giuseppeHdr from '~/assets/hdr/san_giuseppe_bridge_2k.jpg';
-import castleHdr from '~/assets/hdr/teutonic_castle_moat_1k.hdr'; // Adjust the path to your HDR file
+import giuseppeHdr from '~/assets/hdr/san_giuseppe_bridge_2k.jpg';
 
 import { onMounted, onBeforeUnmount, ref } from 'vue'
 const lampTemplate = ref(null)
@@ -23,17 +22,27 @@ let renderer = null
 onMounted(async () => {
     const textureLoader = new THREE.TextureLoader();
     const gltfLoader = new GLTFLoader()
-
     const ultraHDRLoader = new UltraHDRLoader();
 
     const scene = new THREE.Scene()
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
 
+    //background // Sprites BG
+    const gradientBackground = useGetLayer({
+        hue: 0.1,
+        numSprites: 8,
+        opacity: 0.2,
+        radius: 10,
+        size: 24,
+        z: -15.5,
+    });
+    scene.add(gradientBackground);
+
     //add hdr
     const hdrLoader = new UltraHDRLoader();
-    hdrLoader.load(castleHdr, (hdr) => {
+    hdrLoader.load(giuseppeHdr, (hdr) => {
         hdr.mapping = THREE.EquirectangularReflectionMapping;
-        scene.background = hdr;
+        // scene.background = hdr;
         scene.environment = hdr;
     });
 
@@ -71,30 +80,41 @@ onMounted(async () => {
         clearCoatRoughness: 0.5,
         lights: true
     });
+
     // load duck gltf model
-    await gltfLoader.load(lampGltf, (gltf) => {
-        scene.add(gltf.scene)
-
-        gltf.scene.traverse((child) => {
-            if (child.isMesh) {
-                console.log('Child:', child);
-
-                child.geometry.center();
-                // Apply a standard material to the mesh
-                // You can customize the material properties as needed
-                child.material = plasticMaterial;
+    (async () => {
+        await gltfLoader.load(lampGltf, (gltf) => {
+            for (let i = 0; i < 1; i++) {
+                const modelInstance = gltf.scene.clone(); // Clone the scene to create a new instance
+                modelInstance.position.set(i * 2, 0, 0); // Position each instance differently
+                scene.add(modelInstance);
             }
+
+        }, undefined, (error) => {
         });
-        gltf.scene.position.set(0, 0, 0)
-        gltf.scene.scale.set(1, 1, 1)
-    }, undefined, (error) => {
-        console.error('An error happened while loading the GLTF model:', error);
+    })();
+    // make the ducks follow the mouse cursor
+    const mouse = new THREE.Vector2();
+    window.addEventListener('mousemove', (event) => {
+        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
     });
 
+    function updateDucks() {
+        // make the ducks rotate when the mouse moves
+        scene.traverse((object) => {
+            if (object.isMesh) {
+                // object.rotation.y = mouse.x * Math.PI * 2;
+                // object.rotation.x = mouse.y * Math.PI * 2;
+                // object.rotation.z = mouse.x * Math.PI * 2;
+            }
+        });
+    }
 
     // animate the scene
     function animate() {
         requestAnimationFrame(animate)
+        updateDucks();
         renderer.render(scene, camera)
     }
     animate()

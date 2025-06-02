@@ -45,13 +45,13 @@ async function loadGLTFModels() {
 
   try {
     await Promise.all(promises);
-    console.log("All GLTF models loaded successfully.");
   } catch (error) {
-    console.error("Error loading GLTF models:", error);
   }
 }
 
-await loadGLTFModels();
+(async () => {
+  await loadGLTFModels();
+})();
 function getGeometry(size) {
   const randomGeo = geometries[Math.floor(Math.random() * geometries.length)];
   const geo = randomGeo.clone();

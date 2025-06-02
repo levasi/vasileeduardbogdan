@@ -6,6 +6,14 @@
         </div>
 
         <div class="portofolio-section__content grid grid-cols-4 gap-6">
+            <NuxtLink to="/scroll-test"
+                class="portofolio-section__item h-40 cursor-pointer flex-col p-4 bg-white shadow-md rounded-lg flex items-center justify-center">
+                <h3>Scroll test</h3>
+            </NuxtLink>
+            <NuxtLink to="/textanimation1"
+                class="portofolio-section__item h-40 cursor-pointer flex-col p-4 bg-white shadow-md rounded-lg flex items-center justify-center">
+                <h3>Text animation</h3>
+            </NuxtLink>
             <NuxtLink to="/lamp"
                 class="portofolio-section__item h-40 cursor-pointer flex-col p-4 bg-white shadow-md rounded-lg flex items-center justify-center">
                 <h3>Lamp</h3>
@@ -44,6 +52,35 @@
         </div>
     </div>
 </template>
+<script setup>
+// make nuxt link items to stagger opacity with gsap
+import { NuxtLink } from '#components'
+import { onMounted } from 'vue'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+gsap.registerPlugin(ScrollTrigger)
+onMounted(() => {
+    const items = document.querySelectorAll('.portofolio-section__item')
+    items.forEach((item, index) => {
+        gsap.fromTo(item,
+            {
+                opacity: 0
+            },
+            {
+                opacity: 1,
+                duration: 0.5,
+                delay: index * 0.1,
+                scale: 1,
+                ease: 'power1.out',
+                scrollTrigger: {
+                    trigger: item,
+                    start: 'top 80%',
+                    toggleActions: 'play none none reverse'
+                }
+            })
+    })
+})
+</script>
 
 <style scoped lang="scss">
 .portofolio-section {

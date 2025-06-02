@@ -8,12 +8,12 @@
                 rel="stylesheet">
             <div class="top-navigation flex justify-between items-center">
                 <span>
-                    B.Vasile
+
                 </span>
                 <nav>
                     <ul class="navigation p-4">
                         <li>
-                            <NuxtLink to="/">Home</NuxtLink>
+                            <NuxtLink to="/">HOME</NuxtLink>
                         </li>
                     </ul>
                 </nav>
