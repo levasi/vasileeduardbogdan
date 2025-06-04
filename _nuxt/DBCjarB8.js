@@ -1,4 +1,4 @@
-import{a as O,a1 as te,k as I,F as Q,i as p,U as A,h as u,$ as S,a0 as B,au as se,av as ie,C,V as d,j as re,M as G,aw as ae,S as oe,ax as le,P as ne,W as he,n as ue,q as fe,ay as D,az as ce,aA as de,aB as V,aC as k,B as me}from"./C__p7v9B.js";import{l as pe,m as ge,c as ve,o as xe}from"./C6EthGTE.js";const P={name:"CopyShader",uniforms:{tDiffuse:{value:null},opacity:{value:1}},vertexShader:`
+import{a as O,a1 as te,k as I,F as Q,i as p,U as A,h as u,$ as S,a0 as B,au as se,av as ie,C,V as d,j as re,M as G,aw as ae,S as oe,ax as le,P as ne,W as he,n as ue,q as fe,ay as D,az as ce,aA as de,aB as V,aC as k,B as me}from"./C__p7v9B.js";import{r as pe,k as ge,c as ve,o as xe}from"./D2BRVPHh.js";const P={name:"CopyShader",uniforms:{tDiffuse:{value:null},opacity:{value:1}},vertexShader:`
 
 		varying vec2 vUv;
 
