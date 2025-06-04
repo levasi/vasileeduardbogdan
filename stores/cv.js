@@ -7,7 +7,10 @@ export const useCvStore = defineStore('cv', {
             lastName: 'Eduard Vasile',
             email: 'vasileeduardbogdan@gmail.com',
             occupation: 'Front-end Developer',
-            description: 'I am a passionate front-end developer with a keen interest in creating dynamic and responsive web applications. I enjoy working with modern JavaScript frameworks and libraries to build user-friendly interfaces.',
+            description: {
+                title: "Frontend Developer",
+                text: "Experienced in building modern, responsive web applications using Vue.js and Nuxt.js. Passionate about smooth UI/UX, browser animations, and interactive design. Currently learning Three.js to expand into 3D web experiences. Quick to adapt and eager to learn new technologies such as React, Svelte, or any tool that enhances frontend development."
+            },
             productionTools: [
                 { name: 'HTML', level: 'Advanced' },
                 { name: 'CSS', level: 'Advanced' },
@@ -223,8 +226,6 @@ export const useCvStore = defineStore('cv', {
             }
         }
     },
-    // could also be defined as
-    // state: () => ({ count: 0 })
     actions: {
         increment() {
         },

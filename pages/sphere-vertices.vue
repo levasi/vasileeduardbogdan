@@ -8,6 +8,8 @@ import * as THREE from "three";
 import { UltraHDRLoader } from 'three/addons/loaders/UltraHDRLoader.js';
 import giuseppeHdr from '~/assets/hdr/san_giuseppe_bridge_2k.jpg';
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import { FontLoader } from 'three/addons/loaders/FontLoader.js';
+import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 
 export default {
     name: "sphere-vertices",
@@ -60,6 +62,7 @@ export default {
             object.position.y += (planeIntersectPoint.y - object.position.y) * damping;
         };
 
+        // HDR setup
         const addHdr = () => {
             const hdrLoader = new UltraHDRLoader();
             hdrLoader.load(giuseppeHdr, (hdr) => {
@@ -68,11 +71,53 @@ export default {
                 // scene.background = hdr;
             });
         };
+
+        const addText = () => {
+            const fontLoader = new FontLoader();
+            fontLoader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', (font) => {
+                const textGeometry = new TextGeometry('Hello, Three.js!', {
+                    font: font,
+                    size: 0.5,
+                    height: 0.2,
+                    depth: 0.1,
+                    curveSegments: 12,
+                    bevelEnabled: true,
+                    bevelThickness: 0.03,
+                    bevelSize: 0.02,
+                    bevelSegments: 5,
+                });
+
+                const textMaterial = new THREE.MeshStandardMaterial({ color: 0xff6347 });
+                textMesh = new THREE.Mesh(textGeometry, textMaterial);
+                textMesh.position.set(-2, 0, 0); // Adjust position as needed
+                scene.add(textMesh);
+            });
+        };
+
+        addText();
+
         const setupScene = () => {
             scene = new THREE.Scene();
             scene.background = new THREE.Color(0xDFEFCA);
         };
+        window.addEventListener("click", (event) => {
+            // Convert mouse position to normalized device coordinates (NDC)
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
+            // Perform raycasting
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(scene.children, true); // Check all objects in the scene
+
+            // Check if an object was clicked
+            if (intersects.length > 0) {
+                const clickedObject = intersects[0].object;
+                // Change the color of the clicked object if it has a material
+                if (clickedObject.material) {
+                    clickedObject.material.color.set(Math.random() * 0xffffff); // Assign a random color
+                }
+            }
+        });
         const setupCamera = () => {
             camera = new THREE.PerspectiveCamera(
                 75,
@@ -106,8 +151,15 @@ export default {
             light.position.set(10, 10, 10);
             scene.add(light);
         };
-
+        const getCube = () => {
+            const cube = scene.children.find((child) => child.isMesh && child.geometry.type === "SphereGeometry");
+            if (cube) {
+                return cube;
+            }
+            console.warn('No cube found in the scene');
+        }
         const addCube = () => {
+
             const geometry = new THREE.SphereGeometry(
                 3, // Radius
                 16, // Width segments
@@ -161,7 +213,7 @@ export default {
         };
 
         const animateCube = () => {
-            const cube = scene.children.find((child) => child.isMesh && child.geometry.type === "SphereGeometry");
+            const cube = getCube();
             const scaleAmplitude = Math.sin(Date.now() * 0.002) * 0.08 + 1; // Oscillate scale between 0.8 and 1.2
             if (cube) {
                 // Scale the cube
