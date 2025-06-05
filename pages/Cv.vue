@@ -6,7 +6,10 @@
             <button class="mobile-btn experiment-btn" @click="openExperimentPanel">Experimentation Tools</button>
             <button class="mobile-btn languages-btn" @click="openLanguagesPanel">Languages</button>
         </div>
-        <!-- Mobile slide panels -->
+        <!-- Mobile slide panels and backdrop -->
+        <transition name="backdrop-fade">
+            <div v-if="openPanel" class="mobile-backdrop" @click="closePanel"></div>
+        </transition>
         <transition name="slide-panel">
             <div v-if="openPanel === 'tools'" class="mobile-panel">
                 <button class="close-btn" @click="closePanel">×</button>
@@ -50,7 +53,7 @@
                 <div class="tools left-bottom-section">
                     <h2 class="section-title text-md">Tools</h2>
                     <ul class="tools-list pl-0">
-                        <li class="tool-item flex items-center justify-between" v-for="tool in cv.productionTools"
+                        <li class="tool-item flex items-center justify-between" v-for="tool in sortedProductionTools"
                             :key="tool.name">{{ tool.name }}
                             <span v-if="tool.level" class="text-gray-500 text-sm">
                                 ({{ tool.level }})
@@ -84,7 +87,7 @@
                 <h1 class="h1 m-0">{{ cv.firstName }}
                     <span>{{ cv.lastName }}</span>
                 </h1>
-                <h3 class="text-md mb-4">{{ cv.description.title }}</h3>
+                <span class="subtitle">{{ cv.description.title }}</span>
                 <p>{{ cv.description.text }}</p>
                 <p>Email:
                     <a class="email-link" href="mailto:{{ cv.email }}">{{ cv.email }}</a>
@@ -123,7 +126,7 @@
     </section>
 </template>
 <script setup>
-import { ref, onMounted, nextTick } from 'vue'
+import { ref, onMounted, nextTick, computed } from 'vue'
 import { useCvStore } from '~/stores/cv'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -173,6 +176,15 @@ onMounted(async () => {
         }
     })
 })
+
+// Computed sorted production tools
+const sortedProductionTools = computed(() => {
+    if (!cv.productionTools) return [];
+    return [...cv.productionTools].sort((a, b) => {
+        const order = { 'Advanced': 0, 'Intermediate': 1 };
+        return (order[a.level] ?? 2) - (order[b.level] ?? 2);
+    });
+});
 </script>
 <style scoped lang="scss">
 .email-link {
@@ -335,6 +347,16 @@ onMounted(async () => {
     }
 }
 
+.subtitle {
+    display: block;
+    color: #888;
+    font-size: 1.15rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    margin-top: 0.5rem;
+    letter-spacing: 0.01em;
+}
+
 @media (max-width: 768px) {
     .container.cv-section {
         flex-direction: column;
@@ -481,6 +503,32 @@ onMounted(async () => {
 .slide-panel-enter-to,
 .slide-panel-leave-from {
     transform: translateX(0);
+    opacity: 1;
+}
+
+// Mobile panel backdrop
+.mobile-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.32);
+    z-index: 2000;
+}
+
+.backdrop-fade-enter-active,
+.backdrop-fade-leave-active {
+    transition: opacity 0.25s;
+}
+
+.backdrop-fade-enter-from,
+.backdrop-fade-leave-to {
+    opacity: 0;
+}
+
+.backdrop-fade-enter-to,
+.backdrop-fade-leave-from {
     opacity: 1;
 }
 </style>

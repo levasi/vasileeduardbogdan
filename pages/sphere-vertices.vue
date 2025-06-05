@@ -80,14 +80,20 @@ export default {
                     size: 0.5,
                     height: 0.2,
                     depth: 0.1,
-                    curveSegments: 12,
+                    curveSegments: 32,
                     bevelEnabled: true,
-                    bevelThickness: 0.03,
-                    bevelSize: 0.02,
-                    bevelSegments: 5,
+                    bevelThickness: 0.015,
+                    bevelSize: 0.008,
+                    bevelSegments: 16,
                 });
 
-                const textMaterial = new THREE.MeshStandardMaterial({ color: 0xff6347 });
+                const textMaterial = new THREE.MeshPhysicalMaterial({
+                    color: 0xff6347,
+                    roughness: 0.2,
+                    metalness: 0.7,
+                    clearcoat: 0.6,
+                    clearcoatRoughness: 0.1,
+                });
                 textMesh = new THREE.Mesh(textGeometry, textMaterial);
                 textMesh.position.set(-2, 0, 0); // Adjust position as needed
                 scene.add(textMesh);
@@ -116,6 +122,22 @@ export default {
                 if (clickedObject.material) {
                     clickedObject.material.color.set(Math.random() * 0xffffff); // Assign a random color
                 }
+            }
+
+            // Change color of all small spheres
+            const cube = getCube();
+            if (cube) {
+                const smallSpheres = cube.children.filter(child => child.name === 'small-sphere');
+                smallSpheres.forEach(sphere => {
+                    if (sphere.material) {
+                        sphere.material.color.set(Math.random() * 0xffffff);
+                    }
+                });
+            }
+
+            // Change color of the text mesh
+            if (textMesh && textMesh.material) {
+                textMesh.material.color.set(Math.random() * 0xffffff);
             }
         });
         const setupCamera = () => {
