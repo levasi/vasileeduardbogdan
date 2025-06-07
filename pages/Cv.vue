@@ -328,7 +328,7 @@ const sortedProductionTools = computed(() => {
 }
 
 .section-title {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     margin-bottom: 0.5rem;
     color: #DEC802;
     text-transform: uppercase;

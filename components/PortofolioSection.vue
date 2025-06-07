@@ -5,51 +5,51 @@
             <p>Loading ...</p>
         </div>
 
-        <div class="portofolio-section__content grid grid-cols-4 gap-6">
+        <div class="portofolio-section__content grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             <NuxtLink to="/sphere-vertices"
-                class="portofolio-section__item h-40 cursor-pointer flex-col p-4 bg-white shadow-md rounded-lg flex items-center justify-center">
+                class="portofolio-section__item h-40 cursor-pointer flex-col p-4 shadow-md rounded-lg flex items-center justify-center">
                 <h3>Sphere vertices</h3>
             </NuxtLink>
             <NuxtLink to="/scroll-test"
-                class="portofolio-section__item h-40 cursor-pointer flex-col p-4 bg-white shadow-md rounded-lg flex items-center justify-center">
+                class="portofolio-section__item h-40 cursor-pointer flex-col p-4 shadow-md rounded-lg flex items-center justify-center">
                 <h3>Scroll test</h3>
             </NuxtLink>
             <NuxtLink to="/textanimation1"
-                class="portofolio-section__item h-40 cursor-pointer flex-col p-4 bg-white shadow-md rounded-lg flex items-center justify-center">
+                class="portofolio-section__item h-40 cursor-pointer flex-col p-4 shadow-md rounded-lg flex items-center justify-center">
                 <h3>Text animation</h3>
             </NuxtLink>
             <NuxtLink to="/lamp"
-                class="portofolio-section__item h-40 cursor-pointer flex-col p-4 bg-white shadow-md rounded-lg flex items-center justify-center">
+                class="portofolio-section__item h-40 cursor-pointer flex-col p-4 shadow-md rounded-lg flex items-center justify-center">
                 <h3>Lamp</h3>
                 <p>Lamp import.</p>
             </NuxtLink>
             <NuxtLink to="/light-balls"
-                class="portofolio-section__item h-40 cursor-pointer flex-col p-4 bg-white shadow-md rounded-lg flex items-center justify-center">
+                class="portofolio-section__item h-40 cursor-pointer flex-col p-4 shadow-md rounded-lg flex items-center justify-center">
                 <h3>Light Balls</h3>
                 <p>Using Rapier physics.</p>
             </NuxtLink>
             <NuxtLink to="/wormhole"
-                class="portofolio-section__item h-40 cursor-pointer flex-col p-4 bg-white shadow-md rounded-lg flex items-center justify-center">
+                class="portofolio-section__item h-40 cursor-pointer flex-col p-4 shadow-md rounded-lg flex items-center justify-center">
                 <h3>Wormhole</h3>
                 <p>Simulation.</p>
             </NuxtLink>
             <NuxtLink to="/earth"
-                class="portofolio-section__item h-40 cursor-pointer flex-col p-4 bg-white shadow-md rounded-lg flex items-center justify-center">
+                class="portofolio-section__item h-40 cursor-pointer flex-col p-4 shadow-md rounded-lg flex items-center justify-center">
                 <h3>Earth</h3>
                 <p>Simulation.</p>
             </NuxtLink>
             <NuxtLink to="/cube"
-                class="portofolio-section__item h-40 cursor-pointer flex-col p-4 bg-white shadow-md rounded-lg flex items-center justify-center">
+                class="portofolio-section__item h-40 cursor-pointer flex-col p-4 shadow-md rounded-lg flex items-center justify-center">
                 <h3>Cube</h3>
                 <p>Starter template.</p>
             </NuxtLink>
             <NuxtLink to="/demo"
-                class="portofolio-section__item cursor-pointer flex-col p-4 bg-white shadow-md rounded-lg flex items-center justify-center">
+                class="portofolio-section__item cursor-pointer flex-col p-4 shadow-md rounded-lg flex items-center justify-center">
                 <h3>Demo</h3>
                 <p>Demo project</p>
             </NuxtLink>
             <NuxtLink to="/with-react-well"
-                class="portofolio-section__item h-40 cursor-pointer flex-col p-4 bg-white shadow-md rounded-lg flex items-center justify-center">
+                class="portofolio-section__item h-40 cursor-pointer flex-col p-4  shadow-md rounded-lg flex items-center justify-center">
                 <h3>With React well</h3>
                 <p>React translation</p>
             </NuxtLink>
