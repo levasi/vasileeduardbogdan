@@ -3,7 +3,6 @@ import starTexture from '~/assets/images/stars/pngegg.png';
 import nebulaTextureMap from '~/assets/images/stars/nebula.png';
 
 export default function createStarField(container) {
-    console.log(container)
     const width = container.offsetWidth
     const height = container.offsetHeight
     const scene = new THREE.Scene()
@@ -56,7 +55,6 @@ export default function createStarField(container) {
     // Custom ShaderMaterial for rotating sprites
     const loader = new THREE.TextureLoader();
     loader.load(starTexture, (starTexture) => {
-        console.log(starTexture)
         const starMaterial = new THREE.ShaderMaterial({
             uniforms: {
                 pointTexture: { value: starTexture },

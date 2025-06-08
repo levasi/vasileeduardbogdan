@@ -44,7 +44,7 @@
             </div>
         </transition>
         <!-- Main content -->
-        <div class="left">
+        <div class="left md:mt-6">
             <div class="left-top md:mb-5">
                 <img ref="meImage" class="relative rounded-full mx-auto w-32 h-32 object-cover"
                     src="~/assets/images/eu.jpg" alt="">
@@ -82,7 +82,7 @@
                 </div>
             </div>
         </div>
-        <div class="right">
+        <div class="right md:mt-6">
             <div class="right-top text-center">
                 <h1 class="h1 m-0">{{ cv.firstName }}
                     <span>{{ cv.lastName }}</span>
@@ -361,7 +361,6 @@ const sortedProductionTools = computed(() => {
     .container.cv-section {
         flex-direction: column;
         gap: 20px;
-        padding: 1rem;
     }
 
     .left,

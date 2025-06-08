@@ -38,20 +38,10 @@
                 <h3>Earth</h3>
                 <p>Simulation.</p>
             </NuxtLink>
-            <NuxtLink to="/cube"
-                class="portofolio-section__item h-40 cursor-pointer flex-col p-4 shadow-md rounded-lg flex items-center justify-center">
-                <h3>Cube</h3>
-                <p>Starter template.</p>
-            </NuxtLink>
             <NuxtLink to="/demo"
                 class="portofolio-section__item cursor-pointer flex-col p-4 shadow-md rounded-lg flex items-center justify-center">
                 <h3>Demo</h3>
                 <p>Demo project</p>
-            </NuxtLink>
-            <NuxtLink to="/with-react-well"
-                class="portofolio-section__item h-40 cursor-pointer flex-col p-4  shadow-md rounded-lg flex items-center justify-center">
-                <h3>With React well</h3>
-                <p>React translation</p>
             </NuxtLink>
         </div>
     </div>

@@ -17,7 +17,7 @@
                                 Years of <br> experience
                             </span>
                         </div>
-                        <div class="socials" data-speed="1.5">
+                        <div class="socials" data-speed="1.7">
                             <a href="https://www.linkedin.com/in/vasile-eduard-bogdan/" target="_blank"
                                 class="font-medium social-icon">
                                 <img class="linkedin-image" src="~/assets/images/linkedin.svg" alt="">
@@ -29,7 +29,12 @@
                     <div class="image-wrapper w-full max-w-12/12">
                         <img ref="speechLineImage" class="hidden md:block absolute speech-line-image -left-3/4"
                             src="~/assets/images/speech-line.svg" alt="">
-                        <img data-speed="0.5" class="relative  rounded-full" src="~/assets/images/eu.jpg" alt="">
+                        <img v-gsap.whenVisible.once.from="{
+                            opacity: 0,
+                            scale: 0.8,
+                            duration: 1,
+                            ease: 'power2.out'
+                        }" data-speed="0.5" class="relative  rounded-full" src="~/assets/images/eu.jpg" alt="">
                     </div>
                 </div>
 
@@ -42,7 +47,7 @@
                         <NuxtLink class="my-cv-btn" to="/cv">SEE MY CV</NuxtLink>
                     </div>
 
-                    <div class="signature" data-speed="1.5">
+                    <div class="signature" data-speed="1.65">
                         <span class="font-bold font-bubble text-2xl -ml-8">
                             Front-end
                         </span>
@@ -92,7 +97,6 @@ onMounted(() => {
     // Three.js night sky
     nextTick(() => {
         useStarField1(skyContainer.value)
-
 
         // Responsive resize
         window.addEventListener('resize', handleResize)

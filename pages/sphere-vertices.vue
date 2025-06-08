@@ -178,7 +178,6 @@ export default {
             if (cube) {
                 return cube;
             }
-            console.warn('No cube found in the scene');
         }
         const addCube = () => {
 

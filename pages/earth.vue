@@ -1,5 +1,5 @@
 <template>
-
+    <div class="earth-container" ref="earthRef"></div>
 </template>
 <script setup>
 import * as THREE from 'three';
@@ -12,6 +12,7 @@ import bumpMap from '~/assets/images/earth/01_earthbump1k.jpg';
 import lightsMap from '~/assets/images/earth/03_earthlights1k.jpg';
 import earthCloudsMap from '~/assets/images/earth/04_earthcloudmap.jpg';
 import earthCloudsTransMap from '~/assets/images/earth/05_earthcloudmaptrans.jpg';
+const earthRef = ref(null);
 
 onMounted(() => {
     const w = window.innerWidth;
@@ -21,7 +22,7 @@ onMounted(() => {
     camera.position.z = 5;
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(w, h);
-    document.body.appendChild(renderer.domElement);
+    earthRef.value.appendChild(renderer.domElement);
     // THREE.ColorManagement.enabled = true;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.outputColorSpace = THREE.LinearSRGBColorSpace;

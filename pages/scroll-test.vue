@@ -38,8 +38,6 @@ onMounted(() => {
     if ($lenis) {
         $lenis.on('scroll', ScrollTrigger.update)
     }
-
-    // ...your GSAP/ScrollTrigger code...
 })
 import { onMounted, onBeforeUnmount, ref } from 'vue'
 let renderer = null
@@ -89,8 +87,7 @@ onMounted(() => {
             trigger: 0,
             start: 'top top',
             end: 'bottom bottom',
-            scrub: true,
-            markers: true,
+            scrub: true
         },
         x: 12,
         y: 12,
@@ -102,8 +99,7 @@ onMounted(() => {
             trigger: 0,
             start: 'top top',
             end: 'bottom bottom',
-            scrub: true,
-            markers: true,
+            scrub: true
         },
         x: 15,
         y: 15,
